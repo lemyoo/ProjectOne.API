@@ -27,46 +27,7 @@ namespace ProjectOne.API.Repository.Ticket
             }
             else { return false; }
         }
-        /*public string AddTicket(Models.Ticket ticket)
-        {
-            var contstraint = CheckIfTicketExistsAsync(ticket.TicketCode).Result;
-            if (contstraint)
-            {
-                return $"This ticket code {ticket.TicketCode}  already exists";
-            }
-            ticketRepository.Tickets.Add(ticket);
-            ticketRepository.SaveChanges();
-            return $"Successful";
-        }*/
-
-        /*public List<OutExcelDto> SendAllTicketsForVerifiactionAsync(List<Models.Ticket> tickets)
-        {
-            List<OutExcelDto> outExcelDtos = new List<OutExcelDto>();
-
-            foreach (var ticket in tickets)
-            {
-                OutExcelDto outExcelDto = new OutExcelDto();
-
-                outExcelDto.TicketCode = ticket.TicketCode;
-                outExcelDto.DateCreated = ticket.DateCreated;
-                outExcelDto.TicketType = ticket.TicketType;
-                outExcelDto.DuplicateFromDb = false;
-                outExcelDto.DuplicateFromExcelSheet = false;
-
-                var exists = ticketRepository.Tickets.AnyAsync(t => t.TicketCode == ticket.TicketCode).Result;
-                if(exists)
-                {
-                    outExcelDto.DuplicateFromDb = true;
-                }
-
-                outExcelDtos.Add(outExcelDto);
-            }
-
-            //var duplicatesFromFile = outExcelDtos.GroupBy(t => t.TicketCode).Where(group => group.Count() > 1).Select(group => group);
         
-            return outExcelDtos ;
-        }*/
-
         public async Task<List<OutExcelDto>> CheckAgainstDBAndFileAsync(List<Models.Ticket> tickets)
         {
             var outExcelDtos = new List<OutExcelDto>();
