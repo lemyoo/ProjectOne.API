@@ -1,0 +1,6 @@
+@ProjectOne.API_HostAddress = http://localhost:5053
+
+GET {{ProjectOne.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
