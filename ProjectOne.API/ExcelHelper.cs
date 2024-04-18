@@ -63,6 +63,8 @@ namespace ProjectOne.API
                     }
                     else if (property.PropertyType == typeof(DateTime))
                     {
+                        Console.WriteLine(cell.DateCellValue);
+                        
                         property.SetValue(obj, cell.DateCellValue);
                     }
                     else if (property.PropertyType == typeof(bool))

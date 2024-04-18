@@ -1,5 +1,6 @@
 using ProjectOne.API.Repository;
 using ProjectOne.API.Repository.Ticket;
+using static System.Net.WebRequestMethods;
 
 var AllowSpecificOrigins = "_allowSpecificOrigins";
 
@@ -18,7 +19,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllowSpecificOrigins, builder =>
     {
-        builder.WithOrigins("https://localhost:44327")
+        builder.WithOrigins(["https://localhost:44327"])
         .AllowAnyHeader()
         .WithMethods("GET", "POST")
         .AllowCredentials();

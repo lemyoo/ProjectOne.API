@@ -27,11 +27,19 @@ namespace ProjectOne.API.Controllers
         {
             try 
             {
+                //Console.WriteLine("HIT THE END POINT SUCCESSFULLY");
                 if(formFile.Length == 0) { return NoContent(); }
 
                 var filePath = SaveFile(formFile);
 
                 var tickets = ExcelHelper.Import<Ticket>(filePath);
+
+                //foreach(var myticket in tickets)
+                //{
+                //    Console.WriteLine(myticket.DateCreated.ToString());
+                //}
+
+                
 
                 var checkedagainstDbAndFile = ticketRepository.CheckAgainstDBAndFileAsync(tickets).Result;
 
@@ -76,6 +84,7 @@ namespace ProjectOne.API.Controllers
         [HttpPost]
         public IActionResult UploadData(List<InExcelDto> inExcelDto) 
         {
+            Console.WriteLine("This just called");
             var data = ticketRepository.UploadDataToDbAsync(inExcelDto);
             
             return Ok(data);
