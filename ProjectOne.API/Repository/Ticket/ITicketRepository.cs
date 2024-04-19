@@ -5,7 +5,7 @@ namespace ProjectOne.API.Repository.Ticket
 {
     public interface ITicketRepository
     {
-        public List<Models.Ticket> UploadDataToDbAsync(List<InExcelDto> inExcelDtos);
+        public bool UploadDataToDbAsync(List<InExcelDto> inExcelDtos);
         public Task<List<OutExcelDto>> CheckAgainstDBAndFileAsync(List<Models.Ticket> tickets);
     }
 }

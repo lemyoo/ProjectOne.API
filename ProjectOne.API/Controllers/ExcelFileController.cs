@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjectOne.API.Dtos.InDtos;
 using ProjectOne.API.Models;
 using ProjectOne.API.Repository.Ticket;
-using System.Data;
 
 namespace ProjectOne.API.Controllers
 {
@@ -27,19 +24,11 @@ namespace ProjectOne.API.Controllers
         {
             try 
             {
-                //Console.WriteLine("HIT THE END POINT SUCCESSFULLY");
                 if(formFile.Length == 0) { return NoContent(); }
 
                 var filePath = SaveFile(formFile);
 
                 var tickets = ExcelHelper.Import<Ticket>(filePath);
-
-                //foreach(var myticket in tickets)
-                //{
-                //    Console.WriteLine(myticket.DateCreated.ToString());
-                //}
-
-                
 
                 var checkedagainstDbAndFile = ticketRepository.CheckAgainstDBAndFileAsync(tickets).Result;
 
@@ -84,10 +73,14 @@ namespace ProjectOne.API.Controllers
         [HttpPost]
         public IActionResult UploadData(List<InExcelDto> inExcelDto) 
         {
-            Console.WriteLine("This just called");
             var data = ticketRepository.UploadDataToDbAsync(inExcelDto);
+
+            if (data)
+            {
+                return Ok("Data saved successfully!");
+            }
             
-            return Ok(data);
+            return BadRequest("There's an issue with inserting data into the Database!");
         }
     }
 }

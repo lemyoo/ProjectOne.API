@@ -68,16 +68,24 @@ namespace ProjectOne.API.Repository.Ticket
             return outExcelDtos;
         }
 
-        public List<Models.Ticket> UploadDataToDbAsync(List<InExcelDto> inExcelDtos)
+        public bool UploadDataToDbAsync(List<InExcelDto> inExcelDtos)
         {
             var tickets = mapper.Map<List<Models.Ticket>>(inExcelDtos);
             foreach(var ticket in tickets)
             {
-                ticketRepository.Add(ticket);
-                ticketRepository.SaveChanges();
+                try
+                {
+                    ticketRepository.Add(ticket);
+                    ticketRepository.SaveChanges();
+                }catch (Exception ex)
+                {
+                    Console.WriteLine("Error when inserting data in DB: "+ex.Message);
+                    return false;
+                }
+
             }
-            
-            return tickets;
+
+            return true;
         }
     }
 }
